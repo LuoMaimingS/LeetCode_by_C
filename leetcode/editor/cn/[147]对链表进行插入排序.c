@@ -29,19 +29,36 @@
 // 
 // Related Topics 排序 链表
 
+#include "stdlib.h"
 
+// Definition for singly-linked list.
+struct ListNode {
+    int val;
+    struct ListNode *next;
+};
 //leetcode submit region begin(Prohibit modification and deletion)
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     struct ListNode *next;
- * };
- */
 
 
 struct ListNode* insertionSortList(struct ListNode* head){
+    if (head == NULL)
+        return NULL;
 
+    struct ListNode* phantom_head = (struct ListNode*)calloc(1, sizeof(struct ListNode));
+    phantom_head->next = head;
+    struct ListNode* cur_node = head->next;
+    head->next = NULL;
+
+    while (cur_node != NULL) {
+        struct ListNode* insert_prev_p = phantom_head;
+        while ((insert_prev_p->next != NULL) && (insert_prev_p->next->val) <= cur_node->val) {
+            insert_prev_p = insert_prev_p->next;
+        }
+        struct ListNode* temp = cur_node->next;
+        cur_node->next = insert_prev_p->next;
+        insert_prev_p->next = cur_node;
+        cur_node = temp;
+    }
+    return phantom_head->next;
 }
 
 
