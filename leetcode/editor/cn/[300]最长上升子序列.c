@@ -49,7 +49,7 @@ int BinarySearch(int *nums, int val, int start, int end) {
         int mid = left + (right - left) / 2;
         if (nums[mid] < val) {
             left = mid + 1;
-        } else if (nums[mid] >= val) {
+        } else if (nums[mid] > val) {
             right = mid;
         }
     }
